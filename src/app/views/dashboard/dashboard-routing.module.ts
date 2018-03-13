@@ -3,7 +3,6 @@ import { Routes,
      RouterModule } from '@angular/router';
 
 import { ProfileComponent } from './profile.component';
-import { UserManageComponent } from './super.user.component';
 import { SearchComponent } from './search.component';
 import { SkillComponent } from './skill.component';
 import { TagComponent } from './tag.component';
