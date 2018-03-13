@@ -57,7 +57,7 @@ export class SkillItemComponent implements OnInit {
     }
   }
 
-  public remove = (index) => {
+  public remove = () => {
     this.removeSkill.next(this.skill);
   }
 }
