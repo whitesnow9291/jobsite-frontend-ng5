@@ -1,0 +1,8 @@
+<div class="animated fadeIn">
+  <div class="col-md-6 content_component">
+    <h1 class="mt-5"> Skills Inventory </h1>
+    <app-skill-item [maxScore]=7 [forDisplay]="false" (rateChanged)="onRateChange($event)" (removeSkill)="onRemoveSkill($event)" *ngFor = "let skill of skills" [skill]="skill"></app-skill-item>
+    <button class="btn btn-success" (click) = "addSkill()" type="button">Add new</button>
+
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="animated fadeIn">
+  <div class="row skill-item">
+      <div class='skill-rating col-md-8'>
+        <i *ngFor='let n of range; let $index = index;' [tooltip]="tootipstrs[$index]" class='fa to-rate' (click)='mark($index)' [ngClass]='isMarked($index)'></i>
+      </div>
+
+      <div class="skill-select col-md-3">
+        <ng-select
+        placeholder="Choose your skill"
+        [options]="skills"
+        [allowClear]="true"></ng-select>
+      </div>
+      <div class="skill-remove col-md-1">
+        <button class="btn btn-danger" type="button" (click) = "remove()"><i class="icon-trash"></i></button>
+      </div>
+  </div>
+</div>

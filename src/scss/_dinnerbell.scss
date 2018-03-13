@@ -1,0 +1,41 @@
+// Here you can add other styles
+.navbar-nav {
+    margin-left: 30% !important;
+}
+.main {
+    margin-left: 0% !important;
+}
+.content_component {
+    margin: 0 auto;
+    .skill-item {
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+}
+.skill-rating{
+    .to-rate{
+        cursor: pointer;
+        padding: 0 5px;
+    }
+    .fa-star-o{
+        color: orange;
+    }
+    .fa-star{
+        color: orange;
+    }
+    .fa {
+        font-size: 4em !important;
+    }
+}
+.skill-item {
+    background: white;
+    padding: 15px 0;
+    margin: 5px 0;
+}
+.content_component .row{
+    margin: 5px 0;
+}
+.skill-select {
+    
+}
