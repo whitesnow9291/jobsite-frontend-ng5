@@ -3,15 +3,15 @@
       <div class='skill-rating col-md-8'>
         <i *ngFor='let n of range; let $index = index;' [tooltip]="tootipstrs[$index]" class='fa to-rate' (click)='mark($index)' [ngClass]='isMarked($index)'></i>
       </div>
-
-      <div class="skill-select col-md-3">
-        <ng-select
-        placeholder="Choose your skill"
-        [options]="skills"
-        [allowClear]="true"
-        [ngModel] = 'skill_title'
-        (ngModelChange)="onSkillChange($event)"
-        ></ng-select>
+      <div class='col-md-3'>
+        <ng-select 
+          [items]="possible_skills"
+          [multiple]="false"
+          [addTag]="true"
+          (change) = "onSkillChange()"
+          placeholder='Select your skill'
+          [(ngModel)]="skill.name">
+        </ng-select>
       </div>
       <div class="skill-remove col-md-1">
         <button class="btn btn-danger" type="button" (click) = "remove()"><i class="icon-trash"></i></button>

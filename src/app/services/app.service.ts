@@ -38,6 +38,10 @@ export class APPService {
     const url = `${this.postUrl}/user/search`
     return this.http.post<any>(url, params, httpOptions)
   }
+  skills(): Observable<any> {
+    const url = `${this.postUrl}/user/skills`
+    return this.http.get<any>(url, httpOptions)
+  }
 }
 
 

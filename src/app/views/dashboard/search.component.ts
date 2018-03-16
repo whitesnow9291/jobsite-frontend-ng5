@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import {IOption} from 'ng-select';
+import {NgSelectModule, NgOption} from '@ng-select/ng-select';
+
 import {APPService} from '../../services/app.service'
 
 @Component({
@@ -15,23 +16,17 @@ export class SearchComponent implements OnInit {
 
   message: String
   // ng2-select
-  public skills: Array<IOption> = [
-    {label: 'SQL', value: 'SQL'},
-    {label: 'Cognos', value: 'Cognos'},
-    {label: 'R', value: 'R'},
-    {label: 'Python', value: 'Python'},
-    {label: 'DataStage', value: 'DataStage'},
-    {label: 'SSAS', value: 'SSAS'},
-    {label: 'SAS', value: 'SAS'},
-    {label: 'Predictive Analytics', value: 'Predictive Analytics'},
-    {label: 'Tableau', value: 'Tableau'},
-  ];
+  public skills = [];
   searchSkills: any = [];
   searchRole: String = '';
   users: any = [];
   constructor(public appservice: APPService) { }
   ngOnInit() {
-
+    this.appservice.skills().subscribe((res) => {
+      this.skills = res.data.skills.map((data) => {
+        return data.name
+      })
+    })
   }
   collapsed(event: any): void {
     // console.log(event);

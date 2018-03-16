@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import {NgSelectModule, NgOption} from '@ng-select/ng-select';
 import { Router } from '@angular/router';
-import {IOption} from 'ng-select';
 @Component({
   selector: 'app-skill-item',
   templateUrl: 'skill.item.component.html'
@@ -8,8 +8,8 @@ import {IOption} from 'ng-select';
 export class SkillItemComponent implements OnInit, OnChanges {
 
   @Input() skill;
-  @Input() possible_skills: Array<IOption>;
   @Input() maxScore = 7;
+  @Input() possible_skills
   @Input() forDisplay = false;
   @Output() skillChanged = new EventEmitter();
   @Output() removeSkill = new EventEmitter();
@@ -25,7 +25,7 @@ export class SkillItemComponent implements OnInit, OnChanges {
     'Almost Daily'
   ]
   // ng2-select
-  public skills: Array<IOption>
+  public skills: String[];
   range = [];
   marked = -1;
 
@@ -37,7 +37,6 @@ export class SkillItemComponent implements OnInit, OnChanges {
     }
     this.marked = this.skill.rate
     this.skill_title = this.skill.name
-    this.skills = this.possible_skills
   }
   ngOnChanges(changes: SimpleChanges) {
     // this.skills = Object.assign({}, changes.possible_skills.currentValue)
@@ -58,8 +57,7 @@ export class SkillItemComponent implements OnInit, OnChanges {
       return 'fa-star-o';
     }
   }
-  public onSkillChange = (event) => {
-    this.skill.name = event;
+  public onSkillChange = () => {
     this.skillChanged.next(this.skill);
   }
   public remove = () => {

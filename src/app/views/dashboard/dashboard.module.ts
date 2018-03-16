@@ -11,7 +11,7 @@ import { SkillItemComponent } from './skill.item.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { SelectModule } from 'ng-select';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 // Collapse Component
@@ -23,7 +23,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     CollapseModule.forRoot(),
     CommonModule,
     FormsModule,
-    SelectModule,
+    NgSelectModule,
     TooltipModule.forRoot()
   ],
   declarations: [ ProfileComponent,

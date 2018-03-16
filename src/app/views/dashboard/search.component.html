@@ -10,12 +10,13 @@
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="text-input">Skills</label>
         <div class="col-md-9">
-            <ng-select
-            class="bootstrap"
-            placeholder="Choose your favorite skills"
-            [options]="skills"
-            [multiple]="true"
-            [(ngModel)]="searchSkills"></ng-select>
+          <ng-select 
+          [items]="skills"
+          [multiple]="true"
+          [addTag]="true"
+          placeholder='Select skills'
+          [(ngModel)]="searchSkills">
+        </ng-select>
         </div>
         <div class="col-md-9">
           <button type="submit" class="btn btn-sm btn-primary" (click) = "onSearch()"><i class="fa fa-dot-circle-o"></i> Submit</button>

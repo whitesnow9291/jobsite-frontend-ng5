@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import {IOption} from 'ng-select';
 import { AuthService } from '../../services/auth.service'
+import { APPService } from '../../services/app.service'
 
 class Skill {
   name: String
@@ -15,20 +15,15 @@ export class SkillComponent implements OnInit {
 
   skills: Skill[] = [];
   message: String = ''
-  public possible_skills: Array<IOption> = [
-    {label: 'SQL', value: 'SQL'},
-    {label: 'Cognos', value: 'Cognos'},
-    {label: 'R', value: 'R'},
-    {label: 'Python', value: 'Python'},
-    {label: 'DataStage', value: 'DataStage'},
-    {label: 'SSAS', value: 'SSAS'},
-    {label: 'SAS', value: 'SAS'},
-    {label: 'Predictive Analytics', value: 'Predictive Analytics'},
-    {label: 'Tableau', value: 'Tableau'},
-  ];
-  constructor(public authservice: AuthService, public router: Router) { }
+  public possible_skills = [];
+  constructor(public authservice: AuthService, public router: Router, public appservice: APPService) { }
   ngOnInit() {
-    this.skills = this.authservice.current_user.skills
+    this.appservice.skills().subscribe((res) => {
+      this.possible_skills = res.data.skills.map((data) => {
+        return data.name
+      })
+    })
+    this.skills = this.authservice.current_user ? this.authservice.current_user.skills : []
   }
   addSkill() {
     for (let i = 0; i < this.skills.length; i ++ ) {
@@ -39,7 +34,7 @@ export class SkillComponent implements OnInit {
     }
     const newSkill = new Skill
     newSkill.name = ''
-    newSkill.rate = 0
+    newSkill.rate = -1
     this.skills.push(newSkill)
   }
   saveSkill () {
@@ -67,7 +62,7 @@ export class SkillComponent implements OnInit {
       if (res.success) {
         alert('Successfully updated')
         this.authservice.current_user.skills = this.skills
-        console.log(this.authservice.current_user)
+        // console.log(this.authservice.current_user)
         this.message = 'Successfully updated'
       } else {
         this.message = res.error.message
@@ -90,9 +85,6 @@ export class SkillComponent implements OnInit {
   onRemoveSkill(skill) {
     const skill_id = this.skills.indexOf(skill)
     this.skills.splice(skill_id, 1);
-    this.possible_skills.push({
-      label: skill.name,
-      value: skill.name
-    })
+    this.possible_skills.push(skill)
   }
 }
