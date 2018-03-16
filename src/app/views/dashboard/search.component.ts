@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import {IOption} from 'ng-select';
+import {APPService} from '../../services/app.service'
 
 @Component({
   templateUrl: 'search.component.html',
@@ -11,12 +12,8 @@ import {IOption} from 'ng-select';
   encapsulation: ViewEncapsulation.None
 })
 export class SearchComponent implements OnInit {
-  companyCollapsed: Boolean = false
-  passwordCollapsed: Boolean = false
-  employeeCollapsed: Boolean = false
-  seatingCollapsed: Boolean = false
-  stripeCollapsed: Boolean = false
-  opentableCollapsed: Boolean = false
+
+  message: String
   // ng2-select
   public skills: Array<IOption> = [
     {label: 'SQL', value: 'SQL'},
@@ -27,16 +24,31 @@ export class SearchComponent implements OnInit {
     {label: 'SSAS', value: 'SSAS'},
     {label: 'SAS', value: 'SAS'},
     {label: 'Predictive Analytics', value: 'Predictive Analytics'},
+    {label: 'Tableau', value: 'Tableau'},
   ];
-  selectedSkills: any;
-  constructor( ) { }
+  searchSkills: any = [];
+  searchRole: String = '';
+  users: any = [];
+  constructor(public appservice: APPService) { }
   ngOnInit() {
 
   }
   collapsed(event: any): void {
     // console.log(event);
   }
-
+  onSearch() {
+    const params = {
+      searchSkills: this.searchSkills,
+      searchRole: this.searchRole
+    }
+    this.appservice.search(params).subscribe((res) => {
+      if (res.success) {
+        this.users = res.data.users
+      } else {
+        this.message = res.error.message
+      }
+    })
+  }
   expanded(event: any): void {
     // console.log(event);
   }

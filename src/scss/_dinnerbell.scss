@@ -36,6 +36,7 @@
 .content_component .row{
     margin: 5px 0;
 }
-.skill-select {
-    
+.content_component.profile .row{
+    display: flex;
+    align-items: center;
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { DinnerbellService } from '../../services/dinnerbell.service'
 import { AuthService } from '../../services/auth.service'
 @Component({
   templateUrl: 'register.component.html'
@@ -12,7 +11,7 @@ export class RegisterComponent implements OnInit {
   public phone_code_sent: Boolean = false
   message: String = ''
   phone_vcode = ''
-  constructor(public dinnerbellservice: DinnerbellService, public authservice: AuthService, public router: Router) { }
+  constructor(public authservice: AuthService, public router: Router) { }
   ngOnInit() {
     this.user = {
       name: '',
@@ -21,48 +20,27 @@ export class RegisterComponent implements OnInit {
       email: '',
       phone_number: '',
       country_code: '',
-      admin_role: '-1',
       authyId: -1,
     }
-    this.phone_verified = false
-    this.phone_code_sent = false
-    this.admin_roles = this.dinnerbellservice.admin_roles
   }
   submitForm () {
     if (this.validateForm()) {
-      const navigationExtras: NavigationExtras = {
-        queryParamsHandling: 'preserve',
-        preserveFragment: true
-      };
-      alert('succesfully signed up')
-      const redirect = '/auth/login'
-      this.router.navigate([redirect], navigationExtras);
-      // const redirect = '/auth/login'
-      // this.router.navigate([redirect], navigationExtras);
-      // const params = this.user
-      // this.authservice.register(params).subscribe((res) => {
-      //   this.user.authyId = -1
-      //   if (res.success) {
-      //     alert('succesfully signed up')
-      //     if (this.user.admin_role === 'restaurant_manager') {
-      //       const queryParams = {
-      //         user_id: res.data.user._id,
-      //         company_id: res.data.company._id
-      //       }
-      //       const redirect = '/auth/company'
-      //       this.router.navigate([redirect, queryParams])
-      //     } else if (this.user.admin_role === 'super_visior') {
-      //       const navigationExtras: NavigationExtras = {
-      //         queryParamsHandling: 'preserve',
-      //         preserveFragment: true
-      //       };
-      //       const redirect = '/auth/login'
-      //       this.router.navigate([redirect], navigationExtras);
-      //     }
-      //   } else {
-      //     this.message = res.error.message
-      //   }
-      // })
+
+      const params = this.user
+      this.authservice.register(params).subscribe((res) => {
+        this.user.authyId = -1
+        if (res.success) {
+          alert('succesfully signed up')
+          const navigationExtras: NavigationExtras = {
+            queryParamsHandling: 'preserve',
+            preserveFragment: true
+          };
+          const redirect = '/auth/login'
+          this.router.navigate([redirect], navigationExtras);
+        } else {
+          this.message = res.error.message
+        }
+      })
     }
   }
   onRoleChange(newValue) {

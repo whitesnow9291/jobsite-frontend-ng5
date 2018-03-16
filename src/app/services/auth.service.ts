@@ -16,7 +16,7 @@ const httpOptions = {
 export class AuthService {
   isLoggedIn = false;
 
-  postUrl = 'https://vast-taiga-29858.herokuapp.com';
+  postUrl = 'https://protected-castle-43645.herokuapp.com';
   // postUrl = 'http://localhost:3000';
   // store the URL so we can redirect after logging in
   redirectUrl: string;
@@ -41,7 +41,10 @@ export class AuthService {
     const loginUrl = `${this.postUrl}/admin/auth/signin`
     return this.http.post<any>(loginUrl, params, httpOptions)
   }
-
+  update(params): Observable<any> {
+    const url = `${this.postUrl}/admin/auth/update`
+    return this.http.post<any>(url, params, httpOptions)
+  }
   logout(): void {
     this.isLoggedIn = false;
   }

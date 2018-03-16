@@ -1,17 +1,20 @@
-import { Component, EventEmitter, OnInit, Input, Output  } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {IOption} from 'ng-select';
 @Component({
   selector: 'app-skill-item',
   templateUrl: 'skill.item.component.html'
 })
-export class SkillItemComponent implements OnInit {
+export class SkillItemComponent implements OnInit, OnChanges {
 
   @Input() skill;
+  @Input() possible_skills: Array<IOption>;
   @Input() maxScore = 7;
   @Input() forDisplay = false;
-  @Output() rateChanged = new EventEmitter();
+  @Output() skillChanged = new EventEmitter();
   @Output() removeSkill = new EventEmitter();
+
+  public skill_title: String
   public tootipstrs = [
     'Interested',
     'Actively Learning',
@@ -22,31 +25,30 @@ export class SkillItemComponent implements OnInit {
     'Almost Daily'
   ]
   // ng2-select
-  public skills: Array<IOption> = [
-    {label: 'SQL', value: 'SQL'},
-    {label: 'Cognos', value: 'Cognos'},
-    {label: 'R', value: 'R'},
-    {label: 'Python', value: 'Python'},
-    {label: 'DataStage', value: 'DataStage'},
-    {label: 'SSAS', value: 'SSAS'},
-    {label: 'SAS', value: 'SAS'},
-    {label: 'Predictive Analytics', value: 'Predictive Analytics'},
-  ];
+  public skills: Array<IOption>
   range = [];
   marked = -1;
 
 
-  constructor( ) { }
+  constructor( private ref: ChangeDetectorRef) { }
   ngOnInit() {
     for (let i = 0; i < this.maxScore; i++) {
       this.range.push(i);
     }
+    this.marked = this.skill.rate
+    this.skill_title = this.skill.name
+    this.skills = this.possible_skills
   }
-
+  ngOnChanges(changes: SimpleChanges) {
+    // this.skills = Object.assign({}, changes.possible_skills.currentValue)
+    // this.ref.detectChanges()
+    this.skills = []
+    this.ref.detectChanges()
+  }
   public mark = (index) => {
     this.marked = this.marked === index ? index - 1 : index;
-    this.skill.score = this.marked + 1;
-    this.rateChanged.next(this.skill.score);
+    this.skill.rate = this.marked + 1;
+    this.skillChanged.next(this.skill);
   }
 
   public isMarked = (index) => {
@@ -56,7 +58,10 @@ export class SkillItemComponent implements OnInit {
       return 'fa-star-o';
     }
   }
-
+  public onSkillChange = (event) => {
+    this.skill.name = event;
+    this.skillChanged.next(this.skill);
+  }
   public remove = () => {
     this.removeSkill.next(this.skill);
   }

@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
-import { DinnerbellService } from './services/dinnerbell.service';
+import { APPService } from './services/app.service';
 
 // Import containers
 import {
@@ -91,7 +91,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }, AuthGuard, AuthService, DinnerbellService],
+  }, AuthGuard, AuthService, APPService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -8,7 +8,10 @@
         <ng-select
         placeholder="Choose your skill"
         [options]="skills"
-        [allowClear]="true"></ng-select>
+        [allowClear]="true"
+        [ngModel] = 'skill_title'
+        (ngModelChange)="onSkillChange($event)"
+        ></ng-select>
       </div>
       <div class="skill-remove col-md-1">
         <button class="btn btn-danger" type="button" (click) = "remove()"><i class="icon-trash"></i></button>

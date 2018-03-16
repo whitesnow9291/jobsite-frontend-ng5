@@ -1,51 +1,82 @@
 <div class="animated fadeIn">
-    <div class="col-md-6 content_component">
+    <div class="col-md-6 content_component profile">
       <div class="card">
         <div class="card-header">
           <strong>Profile</strong>
         </div>
         <div class="card-body">
-          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <div class="alert alert-danger" role="alert" *ngIf = "message">
+              {{ message }}
+          </div>
+          <form *ngIf = "!editmode" class="form-horizontal">
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="text-input">User name</label>
               <div class="col-md-9">
-                <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Enter name">
-                <span class="help-block">Please enter your name</span>
+                <strong class="help-block">{{user.username}}</strong>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="text-input">User role</label>
               <div class="col-md-9">
-                <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Enter role">
-                <span class="help-block">Please enter your role</span>
+                <strong class="help-block">{{user.role}}</strong>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="email-input">Email Input</label>
               <div class="col-md-9">
-                <input type="email" id="email-input" name="email-input" class="form-control" placeholder="Enter Email">
-                <span class="help-block">Please enter your email</span>
+                <strong class="help-block">{{user.email}}</strong>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="phone-input">Phone</label>
               <div class="col-md-9">
-                <input type="phone" id="phone-input" name="phone-input" class="form-control" placeholder="Enter phone">
-                <span class="help-block">Please enter your phone</span>
+                <strong class="help-block">{{user.phone_number}}</strong>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="location-input">location Input</label>
               <div class="col-md-9">
-                <input type="location" id="location-input" name="location-input" class="form-control" placeholder="Enter location">
-                <span class="help-block">Please enter your location</span>
+                <strong class="help-block">{{user.location}}</strong>
+              </div>
+            </div>
+          </form>
+          <form  *ngIf = "editmode" class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">User name</label>
+              <div class="col-md-9">
+                <input type="text" id="username-input" [(ngModel)] = "user.username" name="username-input" class="form-control" placeholder="Enter name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">User role</label>
+              <div class="col-md-9">
+                <input type="text" id="role-input" [(ngModel)] = "user.role" name="role-input" class="form-control" placeholder="Enter role">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="email-input">Email Input</label>
+              <div class="col-md-9">
+                <input type="email" id="email-input" [(ngModel)] = "user.email" name="email-input" class="form-control" placeholder="Enter Email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="phone-input">Phone</label>
+              <div class="col-md-9">
+                <input type="phone" id="phone-input" [(ngModel)] = "user.phone_number" name="phone-input" class="form-control" placeholder="Enter phone">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="location-input">location Input</label>
+              <div class="col-md-9">
+                <input type="location" id="location-input" [(ngModel)] = "user.location" name="location-input" class="form-control" placeholder="Enter location">
               </div>
             </div>
           </form>
         </div>
         <div class="card-footer">
-          <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
-          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+          <button type="submit" class="btn btn-sm btn-primary" *ngIf="!editmode" (click) = "editmode=true"><i class="fa fa-dot-circle-o"></i> Edit</button>
+          <button type="submit" class="btn btn-sm btn-primary" *ngIf="editmode" (click) = "onUpdate()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+          <button type="button" class="btn btn-sm btn-danger"  *ngIf="editmode" (click) = "onCancel()"><i class="fa fa-ban"></i> Cancel</button>
         </div>
       </div>
     </div>

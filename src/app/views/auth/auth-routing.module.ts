@@ -5,7 +5,6 @@ import { P404Component } from './404.component';
 import { P500Component } from './500.component';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
-import { CompanyComponent } from './company.component';
 
 const routes: Routes = [
   {
@@ -38,13 +37,6 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent,
-        data: {
-          title: 'Register Page'
-        }
-      },
-      {
-        path: 'company',
-        component: CompanyComponent,
         data: {
           title: 'Register Page'
         }
